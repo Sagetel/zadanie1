@@ -1,4 +1,4 @@
-const sendMsg = () => {
-    console.log("Привет, мир!");
+const sendMsg = (msg) => {
+    console.log(msg);
 }
-sendMsg();
+sendMsg("Привет, мир!");
