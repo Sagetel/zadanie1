@@ -1,0 +1,96 @@
+Задание 1 – Создать объект counter всеми возможными способами;
+
+1. const counter = {value: 0, increment: 1, makeInctement() {this.value = this.value + this.increment}, getValue() {return this.value}}
+2. const counter = new Object({value: 0, increment: 1, makeInctement() {this.value = this.value + this.increment}, getValue() {return this.value}})
+3. function Counter() {
+    this.value = 0
+    this.increment = 1
+    this.makeInctement = () => {this.value = this.value + this.increment}
+    this.getValue = () {return this.value}
+    }
+    const counter = new Counter
+4. const constructorCounter = () => {
+    let counter = 0;
+    let increment = 1;
+    return {
+        makeInctement: ()=> {
+            counter = counter + increment
+            },
+        getValue: ()=> {
+            return counter
+            }
+        }
+    }
+    const counter = constructorCounter()
+
+Задание 2 – Скопировать объект counter всеми возможными способами;
+    const counter = {value: 0, increment: 1, makeInctement() {this.value = this.value + this.increment}}
+    const counter2 = Object.assign(counter)
+    const counter3 = {...counter}
+    const counter4 = JSON.parse(JSON.stringify(counter)) // С потерей метода makeInctement
+    const counter5 = structuredClone(counter) // Без возможнсти скопировать метод
+
+Задание 3 – Создать функцию makeCounter всеми описанными и возможными способами;
+
+1. function makeCounter() {
+    this.value = 0
+    this.increment = 1
+    this.makeInctement = () => {this.value = this.value + this.increment}
+    this.getValue = () => {return this.value}
+    }
+2.  const makeCounter = () => {
+        let value = 0
+        let increment = 1
+        const makeInctement = () => {value = value + increment}
+        const getValue = () => {return this.value}
+    }
+3.  const makeCounter = function counter() {
+        let value = 0
+        let increment = 1
+        const makeInctement = () => {value = value + increment}
+        const getValue = () => {return value}
+    }
+4. const makeCounter = () => {
+        let value = 0
+        return function () {
+            return value++
+        }
+    }
+
+Задание 4 - прочитать и описать работу глобальной функции structuredClone()
+Функция structuredClone() предназначена для глубого копирования, создает полностью независимые от оригинала копии. 
+Из плюсов можно отметить, что эта функция поддерживает сложные типы (Map, Set, Date) в отличие от JSON.parse(JSON.stringify()).
+Из минусов можно выделить отсутсвие возможности выбрать какие свойства нужно копировать, а какие нет. Также не копирует методы. 
+Если JSON.parse(JSON.stringify()) просто теряет методы при "копировании", то structuredClone сыпется ошибкой Failed to execute 'structuredClone' on 'Window': ()=>{} could not be cloned.
+
+
+Бонус
+Задание 1 –
+Написать функцию глубокого сравнения двух объектов:
+
+
+const obj1 = { here: { is: "on", other: "3" }, object: "Y" };
+const obj2 = { here: { is: "on", other: "2" }, object: "Y" };
+
+const deepEqual = (obj1, obj2) => {
+  if (Object.keys(obj1).length !== Object.keys(obj2).length) return false
+  for (let el of Object.keys(obj1)) {
+    if (!obj2.hasOwnProperty(el)) return false
+    if (typeof obj1[el] === 'object' && !Array.isArray(obj1[el]) && obj1[el] !== null) {
+      if (!deepEqual(obj1[el], obj2[el])) return false
+    } else {
+      if (!Object.is(obj1[el], obj2[el])) return false
+    }
+  }
+  return true
+};
+
+console.log(deepEqual(obj1, obj2))
+
+Бонус 
+Задание 2 –
+Развернуть строку в обратном направлении при помощи методов массивов:
+
+function reverseStr(str) {
+  return str.split("").reverse().join("")
+}
